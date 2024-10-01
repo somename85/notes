@@ -5,6 +5,13 @@ import { userPool, identityPool, userPoolClient } from "./auth";
 const region = aws.getRegionOutput().name;
 
 export const frontend = new sst.aws.StaticSite("Frontend", {
+    domain:
+        $app.stage === "production"
+            ? {
+                name: "somename85.link",
+                redirects: ["www.somename85.link"],
+            }
+            : undefined,
     path: "packages/frontend",
     build: {
         output: "dist",
